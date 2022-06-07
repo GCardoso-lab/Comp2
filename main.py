@@ -1,3 +1,4 @@
+# Import
 import json
 
 # Utils
@@ -5,7 +6,7 @@ def class_to_json(obj):
     return json.dumps(obj.__dict__)
 
 
-# Objeto Curso
+# Classe Curso
 class Curso():
     def __init__(self, id, nome, materias_obrigatorias, materias_opcionais, configuracoes, **kwargs):
         self.id = id
