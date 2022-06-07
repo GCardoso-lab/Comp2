@@ -16,6 +16,13 @@ class Curso():
         self.configuracoes = dict(configuracoes)
 
 
+# kwargs.get("permissions", None)
+#if "User.CREATE" in permissions:
+#    return "Tem permissâo"
+#else:
+#    return "Não temos permissão para essa atividade"
+
+
 
 
 p1 = Curso("EST001", "Estatística", ["MAC001", "MAC002"], ["CMP003"], {"ch_materias_obrigatorias": 1400, "ch_materias_opcionais": 600})
