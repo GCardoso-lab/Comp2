@@ -7,12 +7,13 @@ def class_to_json(obj):
 
 # Objeto Curso
 class Curso():
-    def __init__(self, id, nome, materias_obrigatorias, materias_opcionais, configuracoes):
+    def __init__(self, id, nome, materias_obrigatorias, materias_opcionais, configuracoes, **kwargs):
         self.id = id
         self.nome = nome
         self.materias_obrigatorias = list(set(materias_obrigatorias))
         self.materias_opcioanis = list(set(materias_opcionais))
-        self.configuracao_creditos = dict(configuracoes)
+        self.configuracoes = dict(configuracoes)
+
 
 
 
