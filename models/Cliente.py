@@ -1,6 +1,8 @@
 from datetime import datetime as dt
+from dateutil.relativedelta import relativedelta
 
-class Cliente():
+
+class Cliente:
     def __init__(self, id, nome, cpf, data_de_nascimento, email, login, senha):
         self.id = id
         self.nome = nome
@@ -10,22 +12,21 @@ class Cliente():
         self.login = login
         self.senha = senha
 
-    def permissaoFilme(data_de_nascimento, classificacao_do_filme):
-        data = dt.strptime(data_de_nascimento, "%d/%m/%Y")
-        now = datetime.now()
-
-        c = now - data
-
-        if c < classificacao_do_filme:
+    def permissao_filme(self, classificacao_do_filme):
+        data = dt.strptime(self.data_de_nascimento, "%d/%m/%Y")
+        now = dt.now()
+        c = relativedelta(now, data)
+        idade = c.years
+        if idade < classificacao_do_filme:
             return False
         else:
             return True
 
-    def createUsuario(nome, cpf, data_de_nascimento, email, login, senha):
+    def create_usuario(self):
         pass
     
-    def getUsuario(login, senha):
+    def get_usuario(self):
         pass
 
-    def deleteUsuario(login, senha):
+    def delete_usuario(self):
         pass
