@@ -203,7 +203,3 @@ class BaseFilmes:
                             break
                         else:
                             print("\n\nResposta inválida! Digite S ou N.")
-
-
-funcao = BaseFilmes()
-funcao.base_filmes()

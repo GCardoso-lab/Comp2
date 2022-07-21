@@ -12,12 +12,12 @@ class Cliente:
         self.login = login
         self.senha = senha
 
-    def permissao_filme(self, classificacao_do_filme):
+    def permissao_filme(self, filme):
         data = dt.strptime(self.data_de_nascimento, "%d/%m/%Y")
         now = dt.now()
         c = relativedelta(now, data)
         idade = c.years
-        if idade < classificacao_do_filme:
+        if idade < filme.FaixaEtaria:
             return False
         else:
             return True
