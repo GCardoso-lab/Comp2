@@ -72,7 +72,43 @@ class Cliente:
         
     
     def get_usuario(self):
-        pass
+        try:
+            con = sqlite3.connect("./data.db")
+            cur = con.cursor()
+
+            try:
+                result = cur.execute('''
+                    SELECT * FROM clients WHERE cpf = %s
+                ''' % self.cpf)
+
+                for row in result:
+                    return row
+                return 0
+
+            except Exception as e:
+                raise e
+            finally:
+                con.commit()
+                con.close()
+        except Exception as e:
+            raise Exception("Ocorreu um erro da seleção do usuário..", e)
 
     def delete_usuario(self):
-        pass
+        try:
+            con = sqlite3.connect("./data.db")
+            cur = con.cursor()
+
+            try:
+                cur.execute('''
+                    DELETE FROM clients WHERE cpf = %s
+                ''' % self.cpf)
+
+                print("Usuário deletado com sucesso.")
+                return 0
+            except Exception as e:
+                raise e
+            finally:
+                con.commit()
+                con.close()
+        except Exception as e:
+            raise Exception("Ocorreu um erro ao deletar o usuário..", e)

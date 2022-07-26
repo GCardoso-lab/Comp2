@@ -1,6 +1,7 @@
 # Importações
 import os
 import sys 
+import time
 
 # Modelos
 from models.BaseFilmes import BaseFilmes
@@ -9,6 +10,7 @@ from models.Filme import Filme
 from models.Pedido import Pedido
 from models.Produtos import Produto
 from models.Sessao import Sessao
+from models.Ingresso import Ingresso
 
 
 # Lambda's
@@ -16,19 +18,50 @@ clear = lambda: os.system('clear')
 
 # Opções do menu
 menu_options = {
+    0: "Ingresso.com",
     1: "BaseFilmes",
     2: "Clientes",
-    3: "Filmes",
-    4: "Pedidos",
-    5: "Produtos",
-    6: "Sessão",
-    7: "Sair"
+    3: "Pedidos",
+    4: "Produtos",
+    5: "Sair"
 }
 
 
 # Interfaces do terminal
 def interface_client(client_option):
-    if client_option == 1:
+    if client_option == 0:
+        clear()
+        print("---------------------------------------------")
+        print("    CineUFRJ - Administração de Clientes.    ")
+        print("---------------------------------------------")
+        print("            Consultar de usuário             ")
+        print("---------------------------------------------")
+        print("\n")
+
+        get_cpf = input("CPF: ")
+
+        try:
+            cliente = Cliente(None, get_cpf, None)
+            dados_cliente = cliente.get_usuario()
+            clear()
+            print("---------------------------------------------")
+            print("    CineUFRJ - Administração de Clientes.    ")
+            print("---------------------------------------------")
+            print("             Consulta de usuário             ")
+            print("---------------------------------------------")
+            if dados_cliente == 0:
+                print("Nenhum usuário encontrado com esse CPF.")
+            else:
+                print("Nome:", dados_cliente[1])
+                print("CPF: ", dados_cliente[2])
+                print("Data de nascimento: ", dados_cliente[3])
+            print("---------------------------------------------")
+            
+            time.sleep(5)
+            return 0
+        except Exception as e:
+            return 1
+    elif client_option == 1:
         clear()
         print("---------------------------------------------")
         print("    CineUFRJ - Administração de Clientes.    ")
@@ -67,7 +100,77 @@ def interface_client(client_option):
         return 3
 
 def interface_main():
-    if option == 1:
+    if option == 0:
+        clear()
+        print("---------------------------------------------")
+        print("           CineUFRJ - Ingresso.com           ")
+        print("---------------------------------------------")
+        print(" Digite o número do CPF do cliente:          ")
+        print("---------------------------------------------")
+        compras_cpf = input("CPF: ")
+
+        cliente = Cliente(None, compras_cpf, None)
+        dados_cliente = cliente.get_usuario()
+        if dados_cliente == 0:
+            clear()
+            print("---------------------------------------------")
+            print("           CineUFRJ - Ingresso.com           ")
+            print("---------------------------------------------")
+            print(f" Cliente não localizado :(                  ")
+            print("---------------------------------------------")
+            time.sleep(4)
+            clear()
+            return 1
+
+        cliente = Cliente(dados_cliente[1], dados_cliente[2], dados_cliente[3])
+
+        lista_de_sessoes = [
+            {
+                "sessao_id": "27020404",
+                "nome_do_filme": "007 - Sem tempo para morrer",
+                "data_do_filme": "26/07/2022 - 15:10"
+            }
+        ]
+
+        clear()
+        print("------------------------------------------------------------------------")
+        print("                       CineUFRJ - Ingresso.com                          ")
+        print("------------------------------------------------------------------------")
+        print(f" Cliente: {cliente.nome}                                               ")
+        print("------------------------------------------------------------------------")
+        for sessao in lista_de_sessoes:
+            print(f"[{lista_de_sessoes.index(sessao)}] Filme: {sessao['nome_do_filme']}    -   {sessao['data_do_filme']} ")
+        print("\n")
+
+        sessao_id = int(input("Digite o número da sessão desejada: "))
+        row = input("Digite a letra da fileira desejada: ")
+        seat = input("Digite o número do assento desejado: ")
+        dados_sessao = lista_de_sessoes[sessao_id]
+
+        print(dados_sessao)
+
+        ingresso = Ingresso(cliente.cpf, dados_sessao['sessao_id'], dados_sessao['nome_do_filme'], dados_sessao['data_do_filme'], row, seat)
+        
+        try:
+            ingresso.buy_ticket()
+            clear()
+            print("------------------------------------------------------------------------")
+            print("                       CineUFRJ - Ingresso.com                          ")
+            print("------------------------------------------------------------------------")
+            print("                   Compra realizada com sucesso! :)                     ")
+            print("------------------------------------------------------------------------")
+            print(f" Cliente: {cliente.nome}                                               ")
+            print("------------------------------------------------------------------------")
+            print(f" Filme: {dados_sessao['nome_do_filme']} - {dados_sessao['sessao_id']}  ")
+            print(f" Data: {dados_sessao['data_do_filme']}                                 ")
+            print(f" Assento: {seat} / {row}")
+            time.sleep(7)
+            clear()
+            return 0
+        except Exception as e:
+            return 1
+
+    elif option == 1:
         clear()
         _bfilmes = BaseFilmes()
         _bfilmes.base_filmes()
@@ -79,6 +182,7 @@ def interface_main():
         print("---------------------------------------------")
         print(" Selecione a opção que deseja seguir no menu ")
         print("---------------------------------------------")
+        print("0 - Consultar")
         print("1 - Registrar")
         print("2 - Deletar")
         print("3 - Retornar")
@@ -109,10 +213,6 @@ def interface_main():
     elif option == 4:
         pass
     elif option == 5:
-        pass
-    elif option == 6:
-        pass
-    elif option == 7:
         print("[CineUFRJ] Saindo do programa...")
         sys.exit()
 

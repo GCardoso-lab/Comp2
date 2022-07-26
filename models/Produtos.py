@@ -5,6 +5,7 @@ class Produto:
         self.arquivo = None
         self.nome_arquivo = 'produtos.txt'
         self.produtos=[]
+        
     def get_nome(self):
         return self.nome
 

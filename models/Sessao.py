@@ -2,7 +2,7 @@ from models.BaseFilmes import BaseFilmes
 
 
 class Sessao:
-    def __init__(self, sala, horario, dublagem, tresd,):
+    def __init__(self, sala, horario, dublagem, tresd):
         self.Sala = sala
         self.Horario = horario
         self.Dublagem = dublagem
