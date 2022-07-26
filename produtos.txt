@@ -1,0 +1,6 @@
+Refri Pequeno;15; 
+Refri Médio;17; 
+Refri Grande;19; 
+Pipoca Pequena;10; 
+Pipoca Média;12; 
+Pipoca Grande;14; 

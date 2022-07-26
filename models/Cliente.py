@@ -35,11 +35,6 @@ class Cliente:
             print("Tabela instânciada com sucesso!")
         except:
             raise Exception("Ocorreu um erro ao instânciar a tabela no banco de dados.")
-            
-
-    def __main__():
-        print("Olá mundo!")
-
 
     def permissao_filme(self, filme):
         data = dt.strptime(self.data_de_nascimento, "%d/%m/%Y")
@@ -69,8 +64,7 @@ class Cliente:
                 con.close()
         except Exception as e:
             raise Exception("Ocorreu um erro no momento da criação do usuário..", e)
-        
-    
+
     def get_usuario(self):
         try:
             con = sqlite3.connect("./data.db")

@@ -6,9 +6,7 @@ import time
 # Modelos
 from models.BaseFilmes import BaseFilmes
 from models.Cliente import Cliente
-from models.Filme import Filme
 from models.Pedido import Pedido
-from models.Produtos import Produto
 from models.Sessao import Sessao
 from models.Ingresso import Ingresso
 
@@ -21,9 +19,8 @@ menu_options = {
     0: "Ingresso.com",
     1: "BaseFilmes",
     2: "Clientes",
-    3: "Pedidos",
-    4: "Produtos",
-    5: "Sair"
+    3: "Comprar Pipoca",
+    4: "Sair"
 }
 
 
@@ -99,6 +96,7 @@ def interface_client(client_option):
     elif client_option == 3:
         return 3
 
+
 def interface_main():
     if option == 0:
         clear()
@@ -123,12 +121,13 @@ def interface_main():
             return 1
 
         cliente = Cliente(dados_cliente[1], dados_cliente[2], dados_cliente[3])
-
+        sala01 = Sessao("01", "26/07/2022 - 15:10", "Dublado", "2D", "27020404")
+        sala01.adicionar_filme_nome("Thor: Amor e Trovão")
         lista_de_sessoes = [
             {
-                "sessao_id": "27020404",
-                "nome_do_filme": "007 - Sem tempo para morrer",
-                "data_do_filme": "26/07/2022 - 15:10"
+                "sala": sala01.get_sala(),
+                "nome_do_filme": sala01.get_filme(),
+                "data_do_filme": sala01.get_horario()
             }
         ]
 
@@ -139,7 +138,8 @@ def interface_main():
         print(f" Cliente: {cliente.nome}                                               ")
         print("------------------------------------------------------------------------")
         for sessao in lista_de_sessoes:
-            print(f"[{lista_de_sessoes.index(sessao)}] Filme: {sessao['nome_do_filme']}    -   {sessao['data_do_filme']} ")
+            print(f"[{lista_de_sessoes.index(sessao)}] Filme: {sessao['nome_do_filme']}   "
+                  f" -   {sessao['data_do_filme']} ")
         print("\n")
 
         sessao_id = int(input("Digite o número da sessão desejada: "))
@@ -149,7 +149,8 @@ def interface_main():
 
         print(dados_sessao)
 
-        ingresso = Ingresso(cliente.cpf, dados_sessao['sessao_id'], dados_sessao['nome_do_filme'], dados_sessao['data_do_filme'], row, seat)
+        ingresso = Ingresso(cliente.cpf, dados_sessao['sala'], dados_sessao['nome_do_filme'],
+                            dados_sessao['data_do_filme'], row, seat)
         
         try:
             ingresso.buy_ticket()
@@ -161,7 +162,7 @@ def interface_main():
             print("------------------------------------------------------------------------")
             print(f" Cliente: {cliente.nome}                                               ")
             print("------------------------------------------------------------------------")
-            print(f" Filme: {dados_sessao['nome_do_filme']} - {dados_sessao['sessao_id']}  ")
+            print(f" Filme: {dados_sessao['nome_do_filme']} - {dados_sessao['sala']}  ")
             print(f" Data: {dados_sessao['data_do_filme']}                                 ")
             print(f" Assento: {seat} / {row}")
             time.sleep(7)
@@ -188,12 +189,12 @@ def interface_main():
         print("3 - Retornar")
         print("\n")
 
-        while (True):
+        while True:
             try:
                 client_option = int(input("Opção selecionada: "))
             except:
                 print("Não foi possível identificar a opção desejada, tente novamente...")
-                continue;
+                continue
 
             response = interface_client(client_option)
             if response == 0:
@@ -209,16 +210,22 @@ def interface_main():
                 print("[AVISO] Retornando ao menu principal.")
                 break
     elif option == 3:
-        pass
+        clear()
+        print("---------------------------------------------")
+        print("        CineUFRJ - Realizar Pedido.          ")
+        print("---------------------------------------------")
+        print("  Selecione os produtos que deseja comprar!  ")
+        print("---------------------------------------------")
+        pedido = Pedido()
+        pedido.realizar_pedido()
+        pedido.pagar()
     elif option == 4:
-        pass
-    elif option == 5:
         print("[CineUFRJ] Saindo do programa...")
         sys.exit()
 
 
 # Mainframe da aplicação
-while (True):
+while True:
     print("---------------------------------------------")
     print("            Bem vind@ ao CineUFRJ.           ")
     print("---------------------------------------------")
@@ -233,6 +240,6 @@ while (True):
         clear()
         print("\n")
         print("[AVISO] Ocorreu um erro no momento de verificar sua escolha anterior, tente novamente..")
-        continue;
+        continue
 
     interface_main()

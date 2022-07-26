@@ -1,10 +1,10 @@
 class Produto:
-    def __init__(self,nome,preco):
+    def __init__(self, nome, preco):
         self.nome = nome
         self.preco = preco
         self.arquivo = None
         self.nome_arquivo = 'produtos.txt'
-        self.produtos=[]
+        self.produtos = []
         
     def get_nome(self):
         return self.nome
@@ -17,7 +17,7 @@ class Produto:
             self.arquivo = open(self.nome_arquivo, tipo)
             return True
         except IOError:
-            print("Problemas para acessar a base de filmes!")
+            print("Problemas para acessar a base de produtos!")
             return False
 
     def fecha_arq_produtos(self):
@@ -25,7 +25,7 @@ class Produto:
             self.arquivo.close()
             return True
         except IOError:
-            print("Problemas para acessar a base de filmes!")
+            print("Problemas para acessar a base de produtos!")
             return False
 
     def le_arq_produtos(self, linha):

@@ -76,5 +76,12 @@ class Pedido:
         print(boleto)
 
     def pagar_cartao(self, numero, validade, cvv):
-        print(f"{numero}, {validade}, {cvv}")
-        print("funcao em desenvolvimento.")
+        recibo = PrettyTable()
+        recibo.field_names = ["Produto", "Preço"]
+        for produto in self.produtos:
+            print(produto.get_nome())
+            print(produto.get_preco())
+            recibo.add_row([produto.get_nome(), produto.get_preco()])
+        recibo.add_row(["TOTAL:", f"{self.total} RS$"])
+        recibo.add_row(["DEBITADO DO CARTÃO:", f"{str(numero)[:4]}-xxxx-xxxx-xxxx"])
+        print(recibo)

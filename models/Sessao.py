@@ -2,16 +2,20 @@ from models.BaseFilmes import BaseFilmes
 
 
 class Sessao:
-    def __init__(self, sala, horario, dublagem, tresd):
+    def __init__(self, sala, horario, dublagem, tresd, id, filme=''):
         self.Sala = sala
         self.Horario = horario
         self.Dublagem = dublagem
         self.Tresd = tresd
+        self.id = id
         self.cadeiras_disponiveis = [range(1, 150, 1)]
-        self.Filme = ''
+        self.Filme = filme
+        self.arquivo = None
+        self.nome_arquivo = 'sessoes.txt'
+        self.sessoes=[]
 
     def get_sala(self):
-        return self.Sala
+        return f"Sala {self.Sala}"
 
     def get_horario(self):
         return self.Horario
@@ -41,6 +45,16 @@ class Sessao:
         filmeopt = funcao.filmes[opt-1]
         self.Filme = filmeopt
 
+    def adicionar_filme_nome(self,nomefilme):
+        funcao = BaseFilmes()
+        BaseFilmes.recuperar_filmes(funcao)
+        for filme in funcao.filmes:
+            print(filme.get_nome())
+            print(nomefilme)
+            if str(filme.get_nome()) == str(nomefilme):
+                self.Filme = filme
+        print("funcao executada")
+
     def escolhe_assento(self):
         """Escolha assentos entre 1 e 150"""
         print(f"Cadeiras disponíveis: {self.cadeiras_disponiveis}")
@@ -59,3 +73,8 @@ class Sessao:
         bilhete = [self.Filme.get_nome(), self.Filme.get_ano(), self.Sala, self.Horario, self.Dublagem,
                    self.Tresd]
         return bilhete
+
+
+sala1 = Sessao("01","18:10","Dublado","2D","23273278")
+sala1.adicionar_filme_nome("Thor: Amor e Trovão")
+print(sala1.get_filme())

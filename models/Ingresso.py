@@ -29,12 +29,12 @@ class Ingresso:
             print("Instânciando tabelas no banco de dados...")
             ExecuteQueryOperator('''
                 CREATE TABLE IF NOT EXISTS tickets
-                    (id INTEGER PRIMARY KEY, user_cpf TEXT, sessao_id TEXT, nome_filme TEXT, data_filme TEXT, row TEXT, seat TEXT)
+                    (id INTEGER PRIMARY KEY, user_cpf TEXT, sessao_id TEXT, nome_filme TEXT, data_filme TEXT,
+                     row TEXT, seat TEXT)
             ''')
             print("Tabela instânciada com sucesso!")
         except:
             raise Exception("Ocorreu um erro ao instânciar a tabela no banco de dados.")
-    
 
     def buy_ticket(self):
         try:
@@ -53,7 +53,6 @@ class Ingresso:
                 con.close()
         except:
             raise Exception("Ocorreu um erro ao comprar o ticket..", e)
-
 
     def get_ticket(self):
         try:
