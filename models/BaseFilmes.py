@@ -11,7 +11,6 @@ class BaseFilmes:
         self.nome_arquivo = 'filmes.txt'
 
     def base_filmes(self):
-
         while True:
             try:
                 print("\n\n === Base de Filmes === \n\n")

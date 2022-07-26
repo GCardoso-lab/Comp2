@@ -1,4 +1,4 @@
-from Produtos import Produto
+from models.Produtos import Produto
 from prettytable import PrettyTable
 from numpy.random import randint
 

@@ -1,4 +1,6 @@
 from models.BaseFilmes import BaseFilmes
+
+
 class Sessao:
     def __init__(self, sala, horario, dublagem, tresd):
         self.Sala = sala
