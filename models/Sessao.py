@@ -10,9 +10,6 @@ class Sessao:
         self.id = id
         self.cadeiras_disponiveis = [range(1, 150, 1)]
         self.Filme = filme
-        self.arquivo = None
-        self.nome_arquivo = 'sessoes.txt'
-        self.sessoes=[]
 
     def get_sala(self):
         return f"Sala {self.Sala}"
